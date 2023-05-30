@@ -55,10 +55,22 @@ const checkNomeExisting = async(nome, res) => {
         return nomeExist.length > 0;
 
     }catch(error) {
-        return res.status(500).json({message: 'Erro Interno no Servidro'});
+        return res.status(500).json({message: 'Erro Interno no Servidor'});
 
     }
 
+};
+
+const findById = async (id, res) => {
+    try {
+        const query = 'SELECT * FROM registrar WHERE id = ?';
+        const [byId] = await connection.execute(query, [id]);
+        const user = byId[0];
+        return user;
+        
+    }catch(error) {
+        return res.status(500).json({message: 'Erro Interno no Servidor'});
+    }
 };
 
 //Deletando Usuario;
@@ -78,6 +90,7 @@ module.exports = {
     getAll,
     createRegister,
     checkEmailExisting,
+    findById,
     deleteUser,
     checkNomeExisting,
 
