@@ -1,6 +1,8 @@
 //Carregando Modulos
 const express = require('express');
 const cors = require('cors');
+const passport = require('passport');
+const session = require('express-session');
 
 //Importando Router
 const router = require('./router');
@@ -10,6 +12,17 @@ const router = require('./router');
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+
+//configurando o middleware express-session
+app.use(session({
+    secret: 'putaMerdaCaralho',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(router);
 
