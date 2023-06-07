@@ -9,7 +9,7 @@ const validateField = (field, errorMenssagem)  => {
     }
 };
 
-const validateBody  = async(req, res, next) => {
+const validateBody = async(req, res, next) => {
     const { body } = req;
 
     try {
@@ -35,7 +35,35 @@ const validateBody  = async(req, res, next) => {
 
 };
 
+const validateBodyObras = async(req, res, next) => {
+    const { body } = req;
+
+    try {
+        validateField(body.obras, 'Campo Obras em Branco!');
+
+        next();
+
+    }catch(error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
+const validateBodyLogin = async(req, res, next) => {
+    const { body } = req;
+
+    try{
+        validateField(body.email, 'Campo Email em Branco!');
+        validateField(body.senha, 'Campo Senha em Branco!');
+        
+        next();
+        
+    }catch(error) {
+        return res.status(400).json({ message: error.message});
+    }
+};
 
 module.exports = {
     validateBody,
+    validateBodyObras,
+    validateBodyLogin,
 };
