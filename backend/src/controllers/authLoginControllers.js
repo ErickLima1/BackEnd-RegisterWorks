@@ -16,5 +16,3 @@ const controllerLogin = (req, res, next) => {
 };
 
 module.exports = controllerLogin;
-
-
