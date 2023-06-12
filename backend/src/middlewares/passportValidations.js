@@ -8,11 +8,12 @@ const connection = require('../models/connection');
 //Configurando o passport e definir a estrategia de autenticação se der certo é GOD
 passport.use(new localStrategy({ usernameField: 'email', passwordField: 'senha'}, async (email, senha, done) => {
     try {
-        //Aqui ele vai ver se existe um registro existe no banco
+
+        //busca e retorna um objeto do usuário correspondente ao email
         const query = 'SELECT * FROM registrar WHERE email = ?';
         const [rows] = await connection.execute(query, [email]);
         const user = rows[0];
-
+        
         if(!user) {
             console.log('Email Usuario', email); //deletar
             return done(null, false, {message: 'Email Não Encontrando.'});
@@ -21,11 +22,12 @@ passport.use(new localStrategy({ usernameField: 'email', passwordField: 'senha'}
         //bcrypt compare senha
         const isSenha = await bcrypt.compare(senha, user.senha);
         if(!isSenha) {
-            console.log('Senha fornecida:', senha); //Deletar
-            console.log('Senha do usuário:', user.senha); //Deletar
-
+            // console.log('Senha do usuário:', user.senha); //Deletar
+            // console.log('Senha fornecida:', senha); //Deletar
+            
             return done(null, false, {message: 'Senha Incorreta'});
         }
+
         return done(null, user);
 
     } catch(error) {
@@ -40,7 +42,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser( async(id, done) => {
     try{
-        const user = await User.findById(id);
+        const user = await User.findByIdUser(id);
         done(null, user);
         
     }catch(error) {
