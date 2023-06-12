@@ -2,15 +2,16 @@
 const connection  = require('./connection');
 const bcrypt = require('bcryptjs');
 
-//Pegando todos usuarios (teste)
-const getAll = async () => {
-    const [registrar] = await connection.execute('SELECT * FROM registrar');
+//Pegando todos usuarios cadastrado do banco.
+const getAllUsers = async () => {
+    const [result] = await connection.execute('SELECT * FROM registrar');
 
-    return registrar;
+    return result;
 
 };
+
 //Cadastrando um Usuario
-const createRegister = async (registra, res) => {
+const createRegisterUser = async (registra) => {
     try {
         const {nome, email, senha} = registra;
         const dataUTC = new Date(Date.now()).toUTCString();
@@ -26,14 +27,13 @@ const createRegister = async (registra, res) => {
         return  {insertId: createdUsuarios.insertId};
 
     }catch(error) {
-        return res.status(500).json({ message: 'Erro interno no servidor!' });
+        throw new Error('Erro interno no banco!');
     }
     
 };
 
-//Verificando Se existe um Email cadastrado
-const checkEmailExisting = async(email, res) => {
-    
+//Verifica a existencia do registros com o email fornecido..
+const checkEmailExisting = async(email) => {
     try {
         const query = 'SELECT * FROM registrar WHERE email = ?';
         const [emailExist] = await connection.execute(query, [email]);
@@ -42,12 +42,12 @@ const checkEmailExisting = async(email, res) => {
 
     } catch(error) {
         // return error.status(500).json({message: 'Erro interno no Servidor!'});
-        return res.status(500).json({ message: 'Erro interno no servidor!' });
+        throw new Error('Erro interno no banco!');
     }
 };
 
 //Verificando Se existe um nome cadastrado
-const checkNomeExisting = async(nome, res) => {
+const checkNomeExisting = async(nome) => {
     try{
         const query = 'SELECT * FROM registrar WHERE nome = ? ';
         const [nomeExist] = await connection.execute(query, [nome]);
@@ -55,43 +55,44 @@ const checkNomeExisting = async(nome, res) => {
         return nomeExist.length > 0;
 
     }catch(error) {
-        return res.status(500).json({message: 'Erro Interno no Servidor'});
+        throw new Error('Erro interno no banco!');
 
     }
 
 };
 
-const findById = async (id, res) => {
+const findByIdUser = async (id) => {
     try {
         const query = 'SELECT * FROM registrar WHERE id = ?';
         const [byId] = await connection.execute(query, [id]);
         const user = byId[0];
+        
         return user;
         
     }catch(error) {
-        return res.status(500).json({message: 'Erro Interno no Servidor'});
+        throw new Error('Erro interno no banco!');
     }
 };
 
 //Deletando Usuario;
-const deleteUser = async (id, res) => {
+const deleteUser = async (id) => {
     try{
-        const [removedUsers] = await connection.execute('DELETE FROM registrar WHERE id = ?', [id]);    
+        const [removedUsers] = await connection.execute('DELETE FROM registrar WHERE id = ?', [id]); 
+
         return removedUsers;
 
     }catch(error) {
-        return res.status(500).json({message: 'Erro Interno no Servidro'});
+        throw new Error('Erro interno no banco!');
     }
     
 };
 
 //Exportando para usar em outros lugares/
 module.exports = {
-    getAll,
-    createRegister,
+    getAllUsers,
+    createRegisterUser,
     checkEmailExisting,
-    findById,
+    findByIdUser,
     deleteUser,
     checkNomeExisting,
-
 };
