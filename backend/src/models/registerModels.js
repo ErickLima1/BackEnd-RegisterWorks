@@ -10,7 +10,6 @@ const getAllUsers = async () => {
 
 };
 
-//Cadastrando um Usuario
 const createRegisterUser = async (registra) => {
     try {
         const {nome, email, senha} = registra;
