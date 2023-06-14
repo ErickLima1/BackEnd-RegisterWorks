@@ -1,7 +1,7 @@
 //Importando connection
 const connection = require('./connection');
 
-//obter as obras do usuário pelo ID.
+//Obter Obras cadastrada pelo usuario. 
 const getObrasById = async(id) => {
     try{
         const query = 'SELECT * FROM obras where registrar_id = ?';
@@ -15,12 +15,19 @@ const getObrasById = async(id) => {
 
 };
 
-//cadastro de obras registrar_id 	
+const obrasStatus = Object.freeze({
+    Pendente: 'Pendente'
+
+});
+
+//cadastro de obras do usuario registrar_id 	
 const createObras = async(obra) => {
     try{
         const {obras, capitulos, registrar_id} = obra;
+        const status = obrasStatus.Pendente;
+
         const query = 'INSERT INTO obras (obras, capitulos, status, registrar_id) VALUES (?, ?, ? , ?)';
-        const [createObras] = await connection.execute(query, [obras, capitulos, 'Pendente', registrar_id]);
+        const [createObras] = await connection.execute(query, [obras, capitulos, status, registrar_id]);
         
         return {insertId: createObras.insertId};
 
@@ -33,8 +40,6 @@ const createObras = async(obra) => {
 const deleteObras = async(id) => {
     try{
         const [removedObras] = await connection.execute('DELETE FROM obras WHERE obras.id = ?',[id]);
-        console.log(removedObras);
-        console.log('Obra deletada');
 
         return removedObras;
 
@@ -42,16 +47,19 @@ const deleteObras = async(id) => {
         throw new Error('Erro ao Deletar');
     }
 };
-//falta testar
-const updateObras = async(id, res) => {
+
+const updateObras = async(id, obra) => {
     try {
-        const query = 'UPDATE obras SET = ?, capitulos = ?, status = ? WHERE obras.id = ?';
-        const [updatedObras] = await connection.execute(query, [id]);
+        const {obras, capitulos, status} = obra;
+
+        const query = 'UPDATE obras SET obras = ?, capitulos = ?, status = ? WHERE obras.id = ?';
+        const [updatedObras] = await connection.execute(query, [obras, capitulos, status, id]);
 
         return updatedObras;
 
     } catch(error) {
-        return res.status(500).json({message: 'Erro Interno no Servidro'});
+        console.log(error);
+        throw new Error('Erro ao atualizar');
     }
 };
 
