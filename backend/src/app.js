@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 //configurando o middleware express-session
 app.use(session({
-    secret: 'putaMerdaCaralho',
+    secret: 'te-heO92fRLwk1Dt0Wghzg',
     resave: false,
     saveUninitialized: false
 }));
@@ -28,6 +28,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//rota
 app.use(router);
 
 app.get('/', (req, res) => {
