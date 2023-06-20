@@ -28,7 +28,7 @@ const deleteUser = async(req, res) => {
     try {
         const {id} = req.params;
         await registerModel.deleteUser(id);
-        console.log(id);
+        // console.log(id);
 
         return res.status(204).json();
 
