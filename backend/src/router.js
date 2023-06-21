@@ -10,13 +10,20 @@ const validationMiddlewares = require('./middlewares/validationMiddlewares');
 const router = express.Router();
 
 //Carregando Todas Rotas(registro)
-router.get('/registerUser', registerControllers.getAll);
-router.post('/registerUser', validationMiddlewares.validateBody, registerControllers.createRegister);
+router.get('/registerUser', registerControllers.getAllUsers);
+router.post('/registerUser', validationMiddlewares.validateBody, registerControllers.createRegisterUser);
 router.delete('/registerUser/:id', registerControllers.deleteUser);
 
-router.post('/login', loginController);
+//Carregando Rota(Login e cadastrar obras)
+router.post('/login', validationMiddlewares.validateBodyLogin, loginController, (req, res) => {
+    res.status(200).json({message: 'Usuário Logado!'});
+});
 
-router.get('/obras', loginController, obrasControllers.getObrasById);
+//Carregando Rota Obras e seus middlewares
+router.post('/obras', validationMiddlewares.validateBodyObras, obrasControllers.createObras);
+router.get('/obras',  validationMiddlewares.validateBodyLogin, loginController, obrasControllers.getObrasById);
+router.delete('/obras/:id',  obrasControllers.deleteObras);
+router.put('/obras/:id', validationMiddlewares.validateBodyObras, obrasControllers.updateObras);
 
 
 //Exportando modules
