@@ -16,14 +16,15 @@ router.delete('/registerUser/:id', registerControllers.deleteUser);
 
 //Carregando Rota(Login e cadastrar obras)
 router.post('/login', validationMiddlewares.validateBodyLogin, loginController, (req, res) => {
-    res.status(200).json({message: 'Usuário Logado!'});
+    const registrar_id = req.user.id;
+    res.status(200).json({message: 'Usuário Logado! ', registrar_id: registrar_id});
 });
 
 //Carregando Rota Obras e seus middlewares
-router.post('/obras', validationMiddlewares.validateBodyObras, obrasControllers.createObras);
-router.get('/obras',  validationMiddlewares.validateBodyLogin, loginController, obrasControllers.getObrasById);
-router.delete('/obras/:id',  obrasControllers.deleteObras);
-router.put('/obras/:id', validationMiddlewares.validateBodyObras, obrasControllers.updateObras);
+router.post('/obras', validationMiddlewares.validateBodyObras, loginController,obrasControllers.createObras);
+router.get('/obras/findById',  validationMiddlewares.validateBodyLogin, loginController, obrasControllers.getObrasById);
+router.put('/obrasUpdate/:id', validationMiddlewares.validateBodyObras, loginController, obrasControllers.updateObras);
+router.delete('/obras/:id',  validationMiddlewares.validateBodyLogin,loginController, obrasControllers.deleteObras);
 
 
 //Exportando modules
