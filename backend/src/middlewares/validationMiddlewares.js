@@ -9,6 +9,10 @@ const yup = require('yup');
 //Validação para campo Obras usando YUP
 const validateObrasSchema = yup.object().shape({
     obras: yup.string().required('Campo Obras em Branco!'),
+    email:  yup.string().required('Campo E-mail em Branco! '),
+    senha: yup.string().required('Campo Senha em Branco!'),
+    registrar_id: yup.number().required('Campo Id em Branco!'),
+    
 });
 
 //Validação para campo validateBody
@@ -21,9 +25,10 @@ const ValidateBodySchema = yup.object().shape({
 
 //Validação para campo validateBodyLogin
 const validateLogin = yup.object().shape({
-    email: yup.string().required('Campo E-mail em Branco!'),
-    senha: yup.string().required('Campo Senha em Branco!'),
+    email: yup.string().test('empty-email', 'Campo E-mail em Branco!', value => value !== ''),
+    senha: yup.string().test('empty-senha', 'Campo Senha em Branco!', value => value !== ''),
 });
+
 
 
 const validateBody = async(req, res, next) => {
