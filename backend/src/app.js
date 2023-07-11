@@ -31,9 +31,9 @@ app.use(passport.session());
 //rota
 app.use(router);
 
-app.get('/', (req, res) => {
-    res.status(200).send('Ola Mundo!');
-});
+// app.get('/', (req, res) => {
+//     res.status(200).send('Ola Mundo!');
+// });
 
 //Exports Moudlo
 module.exports = app;
