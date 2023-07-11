@@ -4,6 +4,7 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+//Importando os swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
