@@ -34,7 +34,7 @@ app.use('/api-docs/swagger-ui.css', (req, res, next) => {
     next();
 });
 
-app.use('/api-docs/swagger-ui.css', express.static('public/swagger-ui.css'));
+app.use('/api-docs/swagger-ui.css', express.static('../public/swagger-ui.css'));
 
 //// Rota para o Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
