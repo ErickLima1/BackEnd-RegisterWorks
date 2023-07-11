@@ -30,7 +30,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+//// Rota para o Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
+    customCss: '../public/css/swagger-custom.css'
+}));
 
 //rota
 app.use(router);
