@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
+
 //Importando Router
 const router = require('./router');
 
@@ -30,10 +31,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/api-docs/swagger-ui.css', (req, res, next) => {
+    res.setHeader('Content-Type', 'text/css');
+    next();
+});
+
 //// Rota para o Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
-    customCss: '../public/css/swagger-custom.css'
-}));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 //rota
 app.use(router);
