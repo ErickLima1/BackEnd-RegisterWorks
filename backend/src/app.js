@@ -4,8 +4,6 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocs = require('./swagger.json');
 
 //Importando Router
 const router = require('./router');
@@ -30,15 +28,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Rota para swagger ui
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
 //rota
 app.use(router);
 
-// app.get('/', (req, res) => {
-//     res.status(200).send('Ola Mundo!');
-// });
 
 //Exports Moudlo
 module.exports = app;
