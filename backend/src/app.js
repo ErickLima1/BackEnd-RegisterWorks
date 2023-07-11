@@ -7,10 +7,8 @@ const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
-
 //Importando Router
 const router = require('./router');
-
 
 //Criando Objetos com Modulos
 const app = express();
@@ -18,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 //body-parser
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //configurando o middleware express-session
@@ -36,12 +34,13 @@ app.use('/api-docs/swagger-ui.css', (req, res, next) => {
     next();
 });
 
+app.use('/api-docs/swagger-ui.css', express.static('public/swagger-ui.css'));
+
 //// Rota para o Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 //rota
 app.use(router);
-
 
 //Exports Moudlo
 module.exports = app;
