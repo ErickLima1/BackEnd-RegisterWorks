@@ -5,8 +5,7 @@ Cadastro de Usuário e Registro de Obras ou Series.
 # 📁 O objetivo do projeto é criar um sistema de cadastro de usuários e registro de obras que os usuários desejam salvar.
 # 💻 Site Funcionando: 
 # Foto do Projeto Finalizado.
-![Screenshot_1]()
-![Screenshot_2]()
+![Screenshot_1](https://prnt.sc/EeA6VvwgYwP1)
 
 * # 🔧 Tecnologias utilizada No BackEnd-Node.js.
 
