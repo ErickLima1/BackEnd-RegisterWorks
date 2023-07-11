@@ -29,13 +29,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api-docs/swagger-ui.css', (req, res, next) => {
-    res.setHeader('Content-Type', 'text/css');
-    next();
-});
-
-app.use('/api-docs/swagger-ui.css', express.static('../public/swagger-ui.css'));
-
 //// Rota para o Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
