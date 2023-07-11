@@ -11,7 +11,7 @@
     "paths": {
         "/registerUser": {
             "post": {
-                "summary": "Cadastro De Produto",
+                "summary": "Cadastro De Usuário",
                 "description": "Rota Do Cadastro Usuário",
                 "tags": ["registerUser"],
                 "requestBody": {
