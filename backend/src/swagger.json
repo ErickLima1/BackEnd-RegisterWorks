@@ -1,0 +1,403 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API De Cadastro De Usuário",
+        "description": "API Tem Como Objetivo criar um usuário e permitir o cadastro de suas obras favoritas",
+        "contact": {
+            "email": "ericklimacosta@gmail.com" 
+        },
+        "version": "1.0.0"   
+    },
+    "paths": {
+        "/registerUser": {
+            "post": {
+                "summary": "Cadastro De Produto",
+                "description": "Rota Do Cadastro Usuário",
+                "tags": ["registerUser"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schema/registerUser"
+                            },
+                            "examples": {
+                                "registerUser": {
+                                    "value": {
+                                        "nome": "ContaTeste",
+                                        "email": "Contateste@gmail.com",
+                                        "senha": "ewqesdas2313421"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Requisição inválida devido a campos em branco, nome já em uso ou e-mail já em uso."
+                    },
+                    "500": {
+                        "description": "Erro no Servidor!"
+                    },
+                    "201": {
+                        "description": "Requisição bem-sucedida. O Cadastro foi criado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "insertId": {
+                                            "type": "integer",
+                                            "description": "ID do registro inserido."
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }, 
+       "/login ": {
+            "post": {
+                "summary": "Login Usuário",
+                "description": "Rota Do Login",
+                "tags": ["login"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schema/login"
+                            },
+                          "examples": {
+                                "login": {
+                                    "value": {
+                                        "email": "",
+                                        "senha": ""
+                                }
+                              }
+                          }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Requisição inválida devido a campos em branco, nome já em uso ou e-mail já em uso."
+                    },
+                    "500": {
+                        "description": "Erro no Servidor!"
+                    },
+                    "201": {
+                        "description": "Requisição bem-sucedida. O Cadastro foi criado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Usuário Logado!"
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/obras": {
+            "post": {
+                "summary": "Cadastro Da Obras",
+                "description": "Rota Obras",
+                "tags": ["obras"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schema/obras"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Requisição inválida devido a campos em branco, nome já em uso ou e-mail já em uso."
+                    },
+                    "500": {
+                        "description": "Erro no Servidor!"
+                    },
+                    "201": {
+                        "description": "Requisição bem-sucedida. A Obra foi criada com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "insertId": {
+                                            "type": "integer",
+                                            "description": "ID do Registro Obra Inserido."
+                                        }
+                                    }
+        
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/obras/findById": {
+            "get": {
+                "summary": "Obras Salvas do Usuário",
+                "description": "Rota Obras",
+                "tags": ["obras"],
+                "parameters": [
+                    {
+                      "name": "email",
+                      "in": "query",
+                      "description": "Email do usuário",
+                      "schema": {
+                        "type": "string",
+                        "required": true
+                      }
+                    },
+                    {
+                      "name": "senha",
+                      "in": "query",
+                      "description": "Senha do usuário",
+                      "schema": {
+                        "type": "string",
+                        "required": true
+                      }
+                    }
+                ],
+                         
+                "responses": {
+                    "400": {
+                        "description": "Requisição inválida devido a campos em branco, e-mail já em uso."
+                    },
+                    "500": {
+                        "description": "Erro no Servidor!"
+                    },
+                    "200": {
+                        "description": "Requisição bem-sucedida. As obras cadastradas do usuário.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schema/getObras"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        
+        },
+        "/obrasUpdate/{id}": {
+            "put": {
+              "summary": "Atualizar Obra",
+              "description": "Rota para atualizar uma obra existente",
+              "tags": ["obras"],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID da Obra",
+                  "required": true,
+                  "schema": {
+                    "type": "integer"
+                  }
+                }
+              ],
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schema/updateObra"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Obra atualizada com sucesso"
+                },
+                "400": {
+                  "description": "Requisição inválida devido a campos em branco"
+                },
+                "500": {
+                  "description": "Erro no servidor"
+                }
+              }
+            }
+        },
+        "/obras/{id}": {
+            "delete": {
+              "summary": "Deletar Obra",
+              "description": "Rota para deletar uma obra existente",
+              "tags": ["obras"],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID da obra a ser deletada",
+                  "required": true,
+                  "schema": {
+                    "type": "integer"
+                  }
+                }
+              ],
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schema/deleteObra"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "204": {
+                  "description": "Obra deletada com sucesso"
+                },
+                "404": {
+                  "description": "Obra não encontrada"
+                },
+                "500": {
+                  "description": "Erro interno do servidor"
+                }
+              }
+            }
+          }
+          
+    },
+
+    "components": {
+        "schema": {
+            "registerUser": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    }
+                }
+            },
+            "login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                  }
+                }
+            },
+            "obras": {
+                "type": "object",
+                "properties": {
+                    "obras": {
+                        "type": "string",     
+                        "description": "Salve Sua Obra Favorita"              
+                    },
+                    "capitulos": {
+                        "type": "integer"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email Do Usuário"
+                    },
+                    "senha": {
+                        "type": "string",
+                        "description": "Senha Do Usuário"
+                    },
+                    "registrar_id": {
+                        "type": "integer",
+                        "description": "ID Do Registrador"
+                    }
+                }
+            },
+            "getObras": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "ID Da Obra"
+                  },
+                  "obras": {
+                    "type": "string",
+                    "description": "Nome Da Obra"
+                  },
+                  "capitulos": {
+                    "type": "integer",
+                    "description": "Número De Capítulos"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Status Da Obra"
+                  },
+                  "registrar_id": {
+                    "type": "integer",
+                    "description": "ID Do Registrador"
+                  }
+                }
+            },
+            "updateObra": {
+                "type": "object",
+                "properties": {
+                  "obras": {
+                    "type": "string",
+                    "description": "Nome Da Obra"
+                  },
+                  "capitulos": {
+                    "type": "integer",
+                    "description": "Número De Capítulos"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "Status Da Obra"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email Do Usuário"
+                  },
+                  "senha": {
+                    "type": "string",
+                    "description": "Senha Do Usuário"
+                  },
+                  "registrar_id": {
+                    "type": "integer",
+                    "description": "ID do Registrador"
+                  }
+                }
+            },
+            "deleteObra": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email Do Usuário"
+                  },
+                  "senha": {
+                    "type": "string",
+                    "description": "Senha Do Usuário"
+                  }
+                }
+            }
+        }
+    }
+}
