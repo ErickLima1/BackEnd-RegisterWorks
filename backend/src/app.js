@@ -33,8 +33,11 @@ app.use(passport.session());
 // Rota para o Swagger UIi
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-//Statico - talves resolva o problema do MIME
-app.use('/api-docs/swagger-ui.css', express.static(__dirname + '/node_modules/swagger-ui-dist/swagger-ui.css'));
+// Servir arquivos estáticos do Swagger UI
+app.use('/api-docs/swagger-ui-bundle.js', express.static(__dirname + '/node_modules/swagger-ui-dist/swagger-ui-bundle.js'));
+app.use('/api-docs/swagger-ui-standalone-preset.js', 
+    express.static(__dirname + '/node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js'));
+
 
 app.use(router);
 
