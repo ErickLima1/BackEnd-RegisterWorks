@@ -34,10 +34,8 @@ app.use(passport.session());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Servir arquivos estáticos do Swagger UI
-app.use('/api-docs/swagger-ui.css', (req, res, next) => {
-    res.setHeader('Content-Type', 'text/css');
-    next();
-}, express.static(__dirname + '../node_modules/swagger-ui-dist/swagger-ui.css'));
+app.use('/api-docs', express.static(__dirname + '/node_modules/swagger-ui-dist'));
+
 
 
 app.use(router);
