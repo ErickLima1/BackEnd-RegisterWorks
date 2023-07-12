@@ -8,8 +8,15 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api-docs/(.*)",
       "dest": "backend/src/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "backend/src/app.js",
+      "headers": {
+        "Cache-Control": "s-maxage=0"
+      }
     }
   ]
 }
