@@ -4,6 +4,7 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const path = require('path');
 //Importando os modulos swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
@@ -30,11 +31,22 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const ROOT_FOLDER = path.join(__dirname, '.');
+const SRC_FOLDER = path.join(ROOT_FOLDER, 'src');
+
+const options = { customCssUrl: '/public/swagger-ui.css', customSiteTitle: 'API - Cadastro - Swagger' };
+
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerDocs, options));
+app.use('/public', express.static(path.join(SRC_FOLDER, 'public')));
+
 // Rota para o Swagger UIi
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+// app.use('/api-docs', swaggerUi.serve, 
+//     swaggerUi.setup(swaggerDocs),
+//     express.static(__dirname + '/node_modules/swagger-ui-dist')
+// );
 
 // Servir arquivos estáticos do Swagger UI
-app.use('/api-docs', express.static(__dirname + '/node_modules/swagger-ui-dist'));
 
 
 
