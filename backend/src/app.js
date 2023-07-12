@@ -4,7 +4,7 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-//Importando os swagger
+//Importando os modulos swagger
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
@@ -30,10 +30,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//// Rota para o Swagger UIi
+// Rota para o Swagger UIi
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-//rota
+//Statico - talves resolva o problema do MIME
+app.use('/api-docs/swagger-ui.css', express.static(__dirname + '/node_modules/swagger-ui-dist/swagger-ui.css'));
+
 app.use(router);
 
 //Exports Moudlo
