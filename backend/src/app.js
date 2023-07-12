@@ -5,6 +5,8 @@ const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 //Importando os modulos swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocs = require('./swagger.json');
 
 //Importando Router
 const router = require('./router');
@@ -27,6 +29,14 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Rota para o Swagger UIi
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Servir arquivos estáticos do Swagger UI
+app.use('/api-docs', express.static(__dirname + '/node_modules/swagger-ui-dist'));
+
+
 
 app.use(router);
 
