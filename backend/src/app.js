@@ -33,17 +33,11 @@ app.use(passport.session());
 // Rota para o Swagger UIi
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-//Rota para servir o Swagger UI
-app.use('/api-docs', swaggerUi.serve, (req, res, next) => {
-    res.setHeader('Content-Type', 'text/html');
-    next();
-}, swaggerUi.setup(swaggerDocs, { customCss: '.swagger-ui .wrapper { display: flex; justify-content: center; align-items: center; height: 100vh; }' }));
-
 // Servir arquivos estáticos do Swagger UI
 app.use('/api-docs/swagger-ui.css', (req, res, next) => {
     res.setHeader('Content-Type', 'text/css');
     next();
-}, express.static(__dirname + '/node_modules/swagger-ui-dist/swagger-ui.css'));
+}, express.static(__dirname + '../node_modules/swagger-ui-dist/swagger-ui.css'));
 
 
 app.use(router);
