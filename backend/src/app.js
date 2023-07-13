@@ -27,10 +27,16 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const path = require('path');
 
 app.use('/api-docs-ui', swaggerUi.serve, 
     swaggerUi.setup(swaggerDocs)
 );
+
+app.get('/api-docs-ui/swagger-ui.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, 'path/to/swagger-ui.css'));
+});
 
 //Exports Moudlo
 module.exports = app;
