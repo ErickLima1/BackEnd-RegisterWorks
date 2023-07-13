@@ -14,7 +14,10 @@ const swaggerDocs = require('./swagger.json');
 const app = express();
 
 app.use('/favicon-16x16.png', express.static('node_modules/swagger-ui-dist/favicon-16x16.png'));
-app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
+app.get('/api-docs-ui/swagger-ui.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, 'node_modules/swagger-ui-dist/swagger-ui.css'));
+});
 
 app.use(express.json());
 app.use(cors());
