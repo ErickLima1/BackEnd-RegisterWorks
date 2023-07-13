@@ -30,8 +30,9 @@ app.use(passport.session());
 
 
 app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs), 
-    express.static('api-docs-ui')
-    
+    express.static('/api-docs-ui')
+
 );
+
 //Exports Moudlo
 module.exports = app;
