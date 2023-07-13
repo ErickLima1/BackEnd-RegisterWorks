@@ -28,11 +28,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// const path = require('path');
-
-app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-// app.use('/swagger-ui', express.static(path.join(__dirname, 'public/swager-ui-dist')));
+app.use('/api-docs-ui', swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocs)
+);
 
 //Exports Moudlo
 module.exports = app;
