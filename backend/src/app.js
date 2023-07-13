@@ -14,6 +14,7 @@ const swaggerDocs = require('./swagger.json');
 const app = express();
 
 app.use('/favicon-16x16.png', express.static('node_modules/swagger-ui-dist/favicon-16x16.png'));
+app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json());
 app.use(cors());
@@ -32,8 +33,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+//Rota do meu router.js
 app.use(router);
 //Exports Moudlo
 module.exports = app;
