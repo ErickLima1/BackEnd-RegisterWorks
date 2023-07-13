@@ -13,9 +13,6 @@ const swaggerDocs = require('./swagger.json');
 //Criando Objetos com Modulos
 const app = express();
 
-app.use('/api-docs-ui/swagger-ui.css', express.static('node_modules/swagger-ui-dist/swagger-ui.css'));
-app.use('/favicon-16x16.png', express.static('node_modules/swagger-ui-dist/favicon-16x16.png'));
-
 
 app.use(express.json());
 app.use(cors());
