@@ -4,7 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const router = require('./router'); 
-// const path = require('path');
+const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
@@ -14,7 +14,7 @@ const swaggerDocs = require('./swagger.json');
 const app = express();
 
 app.use('/favicon-16x16.png', express.static('node_modules/swagger-ui-dist/favicon-16x16.png'));
-app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
 
 app.use(express.json());
 app.use(cors());
@@ -32,6 +32,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
 //Rota do meu router.js
