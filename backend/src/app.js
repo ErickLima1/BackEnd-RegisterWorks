@@ -28,7 +28,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const options = { customCssUrl: '/public/css/swagger-ui.css' };
+const options = { customCssUrl: './public/css/swagger-ui.css' };
 
 app.use('/api-docs-ui', (req, res, next) => {
     swaggerDocs.host = req.get('host');
@@ -36,7 +36,7 @@ app.use('/api-docs-ui', (req, res, next) => {
     next();
 }, swaggerUi.serve, swaggerUi.setup(swaggerDocs, options));
 
-app.use('/public/css', express.static(path.join(__dirname, 'public/css/swagger-ui.css')));
+app.use('/public/css', express.static(path.join(__dirname, './public/css/swagger-ui.css')));
 
 //Exports Moudlo
 module.exports = app;
