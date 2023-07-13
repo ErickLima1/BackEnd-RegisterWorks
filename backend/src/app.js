@@ -27,13 +27,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const path = require('path');
+// const path = require('path');
 
 // Servir arquivos estáticos
-app.use('/api-docs-ui', swaggerUi.serve);
-app.use('/api-docs-ui', express.static(path.join(__dirname, 'path/api-docs-ui/swagger-ui')));
+// Serve arquivos estáticos
+// Serve arquivos estáticos
+app.use(express.static('public'));
 
 // Configurar rota do Swagger UI
+app.use('/api-docs-ui', swaggerUi.serve);
 app.get('/api-docs-ui', swaggerUi.setup(swaggerDocs));
 
 //Exports Moudlo
