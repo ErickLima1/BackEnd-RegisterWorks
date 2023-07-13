@@ -29,7 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/swagger-ui', express.static(path.join(__dirname, './public/css')));
 
 app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
