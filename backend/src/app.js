@@ -3,7 +3,6 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
@@ -29,10 +28,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/swagger-ui', express.static(path.join(__dirname, './public/css')));
+// const path = require('path');
 
 app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+// app.use('/swagger-ui', express.static(path.join(__dirname, 'public/swager-ui-dist')));
 
 //Exports Moudlo
 module.exports = app;
