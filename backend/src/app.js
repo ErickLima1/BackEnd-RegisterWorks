@@ -4,7 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const router = require('./router'); 
-const path = require('path');
+// const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
@@ -13,11 +13,9 @@ const swaggerDocs = require('./swagger.json');
 //Criando Objetos com Modulos
 const app = express();
 
+app.use('/api-docs-ui/swagger-ui.css', express.static('node_modules/swagger-ui-dist/swagger-ui.css'));
 app.use('/favicon-16x16.png', express.static('node_modules/swagger-ui-dist/favicon-16x16.png'));
-app.get('/api-docs-ui/swagger-ui.css', (req, res) => {
-    res.setHeader('Content-Type', 'text/css');
-    res.sendFile(path.join(__dirname, 'node_modules/swagger-ui-dist/swagger-ui.css'));
-});
+
 
 app.use(express.json());
 app.use(cors());
