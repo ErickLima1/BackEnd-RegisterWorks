@@ -15,7 +15,7 @@ passport.use(new localStrategy({ usernameField: 'email', passwordField: 'senha'}
         const user = rows[0];
         
         if(!user) {
-            console.log('Email Usuario', email); //deletar
+            // console.log('Email Usuario', email); //deletar
             return done(null, false, {message: 'Email Não Encontrando.'});
         }
 
