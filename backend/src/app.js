@@ -3,16 +3,21 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const router = require('./router'); 
-// const path = require('path');
+const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.json');
 
 //Importando Router
+const router = require('./router'); 
 
 //Criando Objetos com Modulos
 const app = express();
 
+//Statico public com swagger-ui.response-control-media-type__accept-message
+app.get('/api-docs-ui/swagger-ui.css', (req, res) => {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(path.join(__dirname, 'public/swagger-ui.css'));
+});
 
 app.use(express.json());
 app.use(cors());
@@ -31,6 +36,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Rota do api-docs-ui swagger com minha documentação.
 app.use('/api-docs-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
